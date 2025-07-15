@@ -1,6 +1,7 @@
 package com.example.Employeespringboot.controllers;
 
 import com.example.Employeespringboot.models.RegisterDetails;
+import com.example.Employeespringboot.models.UserDetailsDto;
 import com.example.Employeespringboot.services.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,4 +45,46 @@ class EmployeeControllerTest {
         assertEquals(2,result.size());
 
     }
+
+    @Test
+    void testGetEmployeeById() {
+        RegisterDetails emp = new RegisterDetails();
+        emp.setEmpId(1);
+        emp.setName("Sri");
+
+        when(employeeService.getEmployeeById(1)).thenReturn(emp);
+
+        RegisterDetails result = employeeController.getEmployeeById(1);
+        assertEquals("Sri", result.getName());
+        assertEquals(1, result.getEmpId());
+    }
+
+    @Test
+    void testPostMethod() {
+        UserDetailsDto dto = new UserDetailsDto();
+        dto.setName("Sri");
+
+        when(employeeService.addNewEmployee(dto)).thenReturn("Employee Added Successfully");
+
+        String result = employeeController.postMethod(dto);
+        assertEquals("Employee Added Successfully", result);
+    }
+
+    @Test
+    void testPutMethod() {
+        when(employeeService.updateEmployee(1)).thenReturn("Employee Updated Successfully");
+
+        String result = employeeController.putMethod(1);
+        assertEquals("Employee Updated Successfully", result);
+    }
+
+    @Test
+    void testDeleteMethod() {
+        when(employeeService.deleteEmployeeById(1)).thenReturn("Employee Deleted Successfully");
+
+        String result = employeeController.deleteMethod(1);
+        assertEquals("Employee Deleted Successfully", result);
+
+    }
+
 }
