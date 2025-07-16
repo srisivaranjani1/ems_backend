@@ -20,10 +20,11 @@ public class JwtTokenProvider {
     @Value("${app.jwt-secret}")
     private String jwtSecret;
     @Value("${app.jwt-expiration-milliseconds}")
-    private Long jwtExpirationMilliSeconds;
+   private long jwtExpirationMilliSeconds;
     private Key secretKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
     }
+
     public  String generateToken(Authentication authenticate){
         UserDetails userPrincipal= (UserDetails) authenticate
                 .getPrincipal();
